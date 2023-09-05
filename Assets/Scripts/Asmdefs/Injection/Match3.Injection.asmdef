@@ -1,0 +1,19 @@
+{
+    "name": "Match3.Injection",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9f508374803df2d4a96383f4d0bcee78",
+        "GUID:1ff0b0855be5c5d4e8760559fe9a337b",
+        "GUID:d472828b2e7870a448d2467fff26398c",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
