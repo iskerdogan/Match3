@@ -5,13 +5,17 @@ using Zenject;
 
 namespace Game.Controller
 {
-    public class GridController : IInitializable
+    public class GridController : IInitializable,IGridViewDelegate
     {
         [Inject] private GridModel _gridModel;
-        [Inject] private GridView _gridView;
+        [Inject] private IGridView _gridView;
         
+        //Controllera ulaşmak için
+        public int Test { get; set; }
+
         public void Initialize()
         {
+            _gridView.SetDelegate(this);
             CreateGird();
         }
 
@@ -46,5 +50,6 @@ namespace Game.Controller
                 _ => throw new ArgumentOutOfRangeException(nameof(tileType), tileType, null)
             };
         }
+
     }
 }

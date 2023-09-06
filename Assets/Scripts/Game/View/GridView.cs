@@ -14,7 +14,24 @@ namespace Game.View
         Right
     }
 
-    public class GridView:MonoBehaviour,IInitializable,IDisposable
+    public interface IGridView
+    {
+        void SetCellsArray(int width, int height);
+        void CreateParentObject();
+        void CreateCell(int id,int width,int height,View.TileType type);
+        void SetNeighbour(int gridWidth,int gridHeight);
+        void ClearTilesTest();
+        void SetDelegate(IGridViewDelegate gridViewDelegate);
+
+    }   
+    
+    //Controllera ulaşmak için
+    public interface IGridViewDelegate
+    {
+        public int Test { get; set; }
+    }
+
+    public class GridView:MonoBehaviour,IInitializable,IDisposable,IGridView
     {
         [SerializeField] private Cell cellPrefab;
         [SerializeField] private Tile tilePrefab;
@@ -22,6 +39,7 @@ namespace Game.View
         [Inject] private InputManager _inputManager;
 
         private GameObject _cellParent;
+        private IGridViewDelegate _gridViewDelegate; //Controllera ulaşmak için
         private List<Cell> _cellMatch = new List<Cell>();
 
         private Cell[] _cells;
@@ -30,20 +48,33 @@ namespace Game.View
         {
             Subscribe();
         }
+
+        //Controllera ulaşmak için
+        public void SetDelegate(IGridViewDelegate gridViewDelegate)
+        {
+            _gridViewDelegate = gridViewDelegate;
+        }
         
         public void Dispose()
         {
             Unsubscribe();
         }
 
-        public void SetCellsArray(int width, int height) => _cells = new Cell[width * height];
-        public void CreateParentObject() => _cellParent = new GameObject("TileParent");
+        public void SetCellsArray(int width, int height)
+        {
+            _cells = new Cell[width * height];
+        }
+
+        public void CreateParentObject()
+        {
+            _cellParent = new GameObject("TileParent");
+        }
+
         public void CreateCell(int id,int width,int height,View.TileType type)
         {
             var cellPosition = Vector3.zero;
-            //Quaternion unity.math kütüphanesini kabul etmiyor neden?
-            Cell cell = Instantiate(cellPrefab, Vector3.zero,new Quaternion(0,0,0,0), _cellParent.transform);
-            Tile tile = Instantiate(tilePrefab, Vector3.zero,new Quaternion(0,0,0,0), cell.transform);
+            Cell cell = Instantiate(cellPrefab, Vector3.zero,Quaternion.identity, _cellParent.transform);
+            Tile tile = Instantiate(tilePrefab, Vector3.zero,Quaternion.identity, cell.transform);
             tile.TileType = type;
             cell.Id = id;
             cell.Width = width;
@@ -148,10 +179,15 @@ namespace Game.View
             for (int i = 0; i < _cellMatch.Count; i++)
             {
                 var temp = i;
-                var currentTile = _cellMatch[temp].CurrentTile;
+                var currentTile = _cellMatch[temp].CurrentTile.gameObject;
                 _cellMatch[temp].CurrentTile = null;
-                Destroy(currentTile.gameObject);
-                CheckNeighbourUp(_cellMatch[temp]);
+                Destroy(currentTile);
+            }
+
+            for (int i = 0; i < _cellMatch.Count; i++)
+            {
+                var temp = i;
+                CheckNeighbourUp(_cellMatch[temp]);//TODO
             }
         }
 
@@ -163,7 +199,6 @@ namespace Game.View
                 cell.CurrentTile = null;
                 return;
             }
-
             if (!neighbourUp.CurrentTile) return; //TODO şu an yeni tile generate etmediği için hata fırlatmasını önlüyor
             if (_cellMatch.Contains(neighbourUp)) return;
             MoveTile(neighbourUp,cell);
@@ -173,11 +208,15 @@ namespace Game.View
         private void MoveTile(Cell neighbourUpCell,Cell destinationCell)
         {
             var tile = neighbourUpCell.CurrentTile;
-            tile.transform.SetParent(null);
-            tile.transform.position = destinationCell.transform.position;
-            tile.transform.SetParent(destinationCell.transform);
+            // tile.transform.SetParent(null);
+            tile.MoveTile(destinationCell.transform);
+            // tile.transform.position = destinationCell.transform.position;
+            // tile.transform.SetParent(destinationCell.transform);
             destinationCell.CurrentTile = tile;
             neighbourUpCell.CurrentTile = null;
+            if (!destinationCell.neighbourDown) return;
+            if (destinationCell.neighbourDown.CurrentTile != null) return;
+            MoveTile(destinationCell,destinationCell.neighbourDown);
         }
 
         private void Clicked()

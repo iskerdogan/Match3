@@ -192,7 +192,7 @@ MonoBehaviour:
     TileType: 0
   - Id: 58
     Coordinate: {x: 4, y: 6}
-    TileType: 0
+    TileType: 2
   - Id: 59
     Coordinate: {x: 5, y: 6}
     TileType: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
     TileType: 0
   - Id: 67
     Coordinate: {x: 4, y: 7}
-    TileType: 0
+    TileType: 2
   - Id: 68
     Coordinate: {x: 5, y: 7}
     TileType: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
     TileType: 0
   - Id: 76
     Coordinate: {x: 4, y: 8}
-    TileType: 0
+    TileType: 2
   - Id: 77
     Coordinate: {x: 5, y: 8}
     TileType: 0
