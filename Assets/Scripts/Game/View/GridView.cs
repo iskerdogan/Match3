@@ -208,10 +208,7 @@ namespace Game.View
         private void MoveTile(Cell neighbourUpCell,Cell destinationCell)
         {
             var tile = neighbourUpCell.CurrentTile;
-            // tile.transform.SetParent(null);
             tile.MoveTile(destinationCell.transform);
-            // tile.transform.position = destinationCell.transform.position;
-            // tile.transform.SetParent(destinationCell.transform);
             destinationCell.CurrentTile = tile;
             neighbourUpCell.CurrentTile = null;
             if (!destinationCell.neighbourDown) return;
