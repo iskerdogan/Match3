@@ -41,6 +41,7 @@ namespace Game.View
         private GameObject _cellParent;
         private IGridViewDelegate _gridViewDelegate; //Controllera ulaşmak için
         private List<Cell> _cellMatch = new List<Cell>();
+        private bool[] _cellMatchBool;
 
         private Cell[] _cells;
         
@@ -63,6 +64,7 @@ namespace Game.View
         public void SetCellsArray(int width, int height)
         {
             _cells = new Cell[width * height];
+            _cellMatchBool = new bool[width * height];
         }
 
         public void CreateParentObject()
@@ -146,30 +148,36 @@ namespace Game.View
             _inputManager.Clicked -= Clicked;
         }
         
-        private void CheckTileType(Cell cell) {
-            if (cell.CheckNeighbourUp() && !_cellMatch.Contains(cell.neighbourUp))
+        private void CheckTileType(Cell cell) 
+        {
+            if (cell.CheckNeighbourUp() && !_cellMatchBool[cell.neighbourUp.Id])
             {
+                _cellMatchBool[cell.neighbourUp.Id] = true;
                 _cellMatch.Add(cell.neighbourUp);
                 CheckTileType(cell.neighbourUp);
             }
-            if (cell.CheckNeighbourDown()&& !_cellMatch.Contains(cell.neighbourDown))
+            if (cell.CheckNeighbourDown()&& !_cellMatchBool[cell.neighbourDown.Id])
             {
+                _cellMatchBool[cell.neighbourDown.Id] = true;
                 _cellMatch.Add(cell.neighbourDown);
                 CheckTileType(cell.neighbourDown);
             }
-            if (cell.CheckNeighbourleft()&& !_cellMatch.Contains(cell.neighbourLeft))
+            if (cell.CheckNeighbourleft()&& !_cellMatchBool[cell.neighbourLeft.Id])
             {
+                _cellMatchBool[cell.neighbourLeft.Id] = true;
                 _cellMatch.Add(cell.neighbourLeft);
                 CheckTileType(cell.neighbourLeft);
             }
-            if (cell.CheckNeighbourRigth()&& !_cellMatch.Contains(cell.neighbourRight))
+            if (cell.CheckNeighbourRigth()&& !_cellMatchBool[cell.neighbourRight.Id])
             {
+                _cellMatchBool[cell.neighbourRight.Id] = true;
                 _cellMatch.Add(cell.neighbourRight);
                 CheckTileType(cell.neighbourRight);
             }
 
-            if (!_cellMatch.Contains(cell))
+            if (!_cellMatchBool[cell.Id])
             {
+                _cellMatchBool[cell.Id] = true;
                 _cellMatch.Add(cell);
             }
         }
@@ -216,6 +224,14 @@ namespace Game.View
             MoveTile(destinationCell,destinationCell.neighbourDown);
         }
 
+        private void ResetToBoolArray()
+        {
+            for (int i = 0; i < _cellMatchBool.Length; i++)
+            {
+                _cellMatchBool[i] = false;
+            }
+        }
+
         private void Clicked()
         {
             if (Camera.main == null) return;
@@ -225,6 +241,7 @@ namespace Game.View
             if (!hit.transform.TryGetComponent(out Cell cell)) return;
             if (!cell.CurrentTile) return;
             if (cell.CurrentTile.TileType == TileType.Empty) return;
+            ResetToBoolArray();
             _cellMatch.Clear();
             CheckTileType(cell);
             // if (_cellMatch.Count >= 3) DestroyEqualsTile(); //TODO
