@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Game.View
@@ -148,31 +150,31 @@ namespace Game.View
             _inputManager.Clicked -= Clicked;
         }
         
-        private void CheckTileType(Cell cell) 
+        private async Task CheckTileType(Cell cell) 
         {
             if (cell.CheckNeighbourUp() && !_cellMatchBool[cell.neighbourUp.Id])
             {
                 _cellMatchBool[cell.neighbourUp.Id] = true;
                 _cellMatch.Add(cell.neighbourUp);
-                CheckTileType(cell.neighbourUp);
+                await CheckTileType(cell.neighbourUp);
             }
             if (cell.CheckNeighbourDown()&& !_cellMatchBool[cell.neighbourDown.Id])
             {
                 _cellMatchBool[cell.neighbourDown.Id] = true;
                 _cellMatch.Add(cell.neighbourDown);
-                CheckTileType(cell.neighbourDown);
+                await CheckTileType(cell.neighbourDown);
             }
             if (cell.CheckNeighbourleft()&& !_cellMatchBool[cell.neighbourLeft.Id])
             {
                 _cellMatchBool[cell.neighbourLeft.Id] = true;
                 _cellMatch.Add(cell.neighbourLeft);
-                CheckTileType(cell.neighbourLeft);
+                await CheckTileType(cell.neighbourLeft);
             }
             if (cell.CheckNeighbourRigth()&& !_cellMatchBool[cell.neighbourRight.Id])
             {
                 _cellMatchBool[cell.neighbourRight.Id] = true;
                 _cellMatch.Add(cell.neighbourRight);
-                CheckTileType(cell.neighbourRight);
+                await CheckTileType(cell.neighbourRight);
             }
 
             if (!_cellMatchBool[cell.Id])
@@ -182,21 +184,32 @@ namespace Game.View
             }
         }
 
-        private void DestroyEqualsTile()
+        private async Task DestroyEqualsTile()
         {
+            Task[] tasks = new Task[_cellMatch.Count];
+            GameObject[] destroyObjects = new GameObject[_cellMatch.Count];
             for (int i = 0; i < _cellMatch.Count; i++)
             {
                 var temp = i;
                 var currentTile = _cellMatch[temp].CurrentTile.gameObject;
                 _cellMatch[temp].CurrentTile = null;
-                Destroy(currentTile);
+                destroyObjects[temp] = currentTile;
+                tasks[temp] = DestroyAnimations(currentTile);
             }
 
+            await Task.WhenAll(tasks);
+            
             for (int i = 0; i < _cellMatch.Count; i++)
             {
                 var temp = i;
-                CheckNeighbourUp(_cellMatch[temp]);//TODO
+                Destroy(destroyObjects[temp]);
+                CheckNeighbourUp(_cellMatch[temp]);
             }
+        }
+
+        private async Task DestroyAnimations(GameObject currentTile)
+        {
+            await currentTile.transform.DOScale(0, .5f).SetEase(Ease.InBack).AsyncWaitForCompletion();
         }
 
         private void CheckNeighbourUp(Cell cell)
@@ -232,7 +245,7 @@ namespace Game.View
             }
         }
 
-        private void Clicked()
+        private async void Clicked()
         {
             if (Camera.main == null) return;
             var rayMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -243,9 +256,9 @@ namespace Game.View
             if (cell.CurrentTile.TileType == TileType.Empty) return;
             ResetToBoolArray();
             _cellMatch.Clear();
-            CheckTileType(cell);
+            await CheckTileType(cell);
             // if (_cellMatch.Count >= 3) DestroyEqualsTile(); //TODO
-            DestroyEqualsTile();
+            await DestroyEqualsTile();
             Debug.Log(_cellMatch.Count);
         }
     }
