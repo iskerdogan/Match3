@@ -1,0 +1,415 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 784e91cac13043f4fade649b50eef80e, type: 3}
+  m_Name: LevelConfig 1
+  m_EditorClassIdentifier: 
+  width: 9
+  height: 11
+  distance: 1
+  tileDatas:
+  - Id: 0
+    Coordinate: {x: 0, y: 0}
+    TileType: 0
+  - Id: 1
+    Coordinate: {x: 1, y: 0}
+    TileType: 0
+  - Id: 2
+    Coordinate: {x: 2, y: 0}
+    TileType: 0
+  - Id: 3
+    Coordinate: {x: 3, y: 0}
+    TileType: 0
+  - Id: 4
+    Coordinate: {x: 4, y: 0}
+    TileType: 0
+  - Id: 5
+    Coordinate: {x: 5, y: 0}
+    TileType: 0
+  - Id: 6
+    Coordinate: {x: 6, y: 0}
+    TileType: 0
+  - Id: 7
+    Coordinate: {x: 7, y: 0}
+    TileType: 0
+  - Id: 8
+    Coordinate: {x: 8, y: 0}
+    TileType: 0
+  - Id: 9
+    Coordinate: {x: 0, y: 1}
+    TileType: 0
+  - Id: 10
+    Coordinate: {x: 1, y: 1}
+    TileType: 0
+  - Id: 11
+    Coordinate: {x: 2, y: 1}
+    TileType: 0
+  - Id: 12
+    Coordinate: {x: 3, y: 1}
+    TileType: 0
+  - Id: 13
+    Coordinate: {x: 4, y: 1}
+    TileType: 0
+  - Id: 14
+    Coordinate: {x: 5, y: 1}
+    TileType: 0
+  - Id: 15
+    Coordinate: {x: 6, y: 1}
+    TileType: 0
+  - Id: 16
+    Coordinate: {x: 7, y: 1}
+    TileType: 0
+  - Id: 17
+    Coordinate: {x: 8, y: 1}
+    TileType: 0
+  - Id: 18
+    Coordinate: {x: 0, y: 2}
+    TileType: 0
+  - Id: 19
+    Coordinate: {x: 1, y: 2}
+    TileType: 0
+  - Id: 20
+    Coordinate: {x: 2, y: 2}
+    TileType: 0
+  - Id: 21
+    Coordinate: {x: 3, y: 2}
+    TileType: 0
+  - Id: 22
+    Coordinate: {x: 4, y: 2}
+    TileType: 0
+  - Id: 23
+    Coordinate: {x: 5, y: 2}
+    TileType: 0
+  - Id: 24
+    Coordinate: {x: 6, y: 2}
+    TileType: 0
+  - Id: 25
+    Coordinate: {x: 7, y: 2}
+    TileType: 0
+  - Id: 26
+    Coordinate: {x: 8, y: 2}
+    TileType: 0
+  - Id: 27
+    Coordinate: {x: 0, y: 3}
+    TileType: 0
+  - Id: 28
+    Coordinate: {x: 1, y: 3}
+    TileType: 0
+  - Id: 29
+    Coordinate: {x: 2, y: 3}
+    TileType: 0
+  - Id: 30
+    Coordinate: {x: 3, y: 3}
+    TileType: 0
+  - Id: 31
+    Coordinate: {x: 4, y: 3}
+    TileType: 0
+  - Id: 32
+    Coordinate: {x: 5, y: 3}
+    TileType: 0
+  - Id: 33
+    Coordinate: {x: 6, y: 3}
+    TileType: 0
+  - Id: 34
+    Coordinate: {x: 7, y: 3}
+    TileType: 0
+  - Id: 35
+    Coordinate: {x: 8, y: 3}
+    TileType: 0
+  - Id: 36
+    Coordinate: {x: 0, y: 4}
+    TileType: 0
+  - Id: 37
+    Coordinate: {x: 1, y: 4}
+    TileType: 0
+  - Id: 38
+    Coordinate: {x: 2, y: 4}
+    TileType: 0
+  - Id: 39
+    Coordinate: {x: 3, y: 4}
+    TileType: 0
+  - Id: 40
+    Coordinate: {x: 4, y: 4}
+    TileType: 0
+  - Id: 41
+    Coordinate: {x: 5, y: 4}
+    TileType: 0
+  - Id: 42
+    Coordinate: {x: 6, y: 4}
+    TileType: 0
+  - Id: 43
+    Coordinate: {x: 7, y: 4}
+    TileType: 0
+  - Id: 44
+    Coordinate: {x: 8, y: 4}
+    TileType: 0
+  - Id: 45
+    Coordinate: {x: 0, y: 5}
+    TileType: 0
+  - Id: 46
+    Coordinate: {x: 1, y: 5}
+    TileType: 0
+  - Id: 47
+    Coordinate: {x: 2, y: 5}
+    TileType: 0
+  - Id: 48
+    Coordinate: {x: 3, y: 5}
+    TileType: 0
+  - Id: 49
+    Coordinate: {x: 4, y: 5}
+    TileType: 0
+  - Id: 50
+    Coordinate: {x: 5, y: 5}
+    TileType: 0
+  - Id: 51
+    Coordinate: {x: 6, y: 5}
+    TileType: 0
+  - Id: 52
+    Coordinate: {x: 7, y: 5}
+    TileType: 0
+  - Id: 53
+    Coordinate: {x: 8, y: 5}
+    TileType: 0
+  - Id: 54
+    Coordinate: {x: 0, y: 6}
+    TileType: 0
+  - Id: 55
+    Coordinate: {x: 1, y: 6}
+    TileType: 0
+  - Id: 56
+    Coordinate: {x: 2, y: 6}
+    TileType: 0
+  - Id: 57
+    Coordinate: {x: 3, y: 6}
+    TileType: 0
+  - Id: 58
+    Coordinate: {x: 4, y: 6}
+    TileType: 0
+  - Id: 59
+    Coordinate: {x: 5, y: 6}
+    TileType: 0
+  - Id: 60
+    Coordinate: {x: 6, y: 6}
+    TileType: 0
+  - Id: 61
+    Coordinate: {x: 7, y: 6}
+    TileType: 0
+  - Id: 62
+    Coordinate: {x: 8, y: 6}
+    TileType: 0
+  - Id: 63
+    Coordinate: {x: 0, y: 7}
+    TileType: 0
+  - Id: 64
+    Coordinate: {x: 1, y: 7}
+    TileType: 0
+  - Id: 65
+    Coordinate: {x: 2, y: 7}
+    TileType: 0
+  - Id: 66
+    Coordinate: {x: 3, y: 7}
+    TileType: 0
+  - Id: 67
+    Coordinate: {x: 4, y: 7}
+    TileType: 0
+  - Id: 68
+    Coordinate: {x: 5, y: 7}
+    TileType: 0
+  - Id: 69
+    Coordinate: {x: 6, y: 7}
+    TileType: 0
+  - Id: 70
+    Coordinate: {x: 7, y: 7}
+    TileType: 0
+  - Id: 71
+    Coordinate: {x: 8, y: 7}
+    TileType: 0
+  - Id: 72
+    Coordinate: {x: 0, y: 8}
+    TileType: 0
+  - Id: 73
+    Coordinate: {x: 1, y: 8}
+    TileType: 0
+  - Id: 74
+    Coordinate: {x: 2, y: 8}
+    TileType: 0
+  - Id: 75
+    Coordinate: {x: 3, y: 8}
+    TileType: 0
+  - Id: 76
+    Coordinate: {x: 4, y: 8}
+    TileType: 0
+  - Id: 77
+    Coordinate: {x: 5, y: 8}
+    TileType: 0
+  - Id: 78
+    Coordinate: {x: 6, y: 8}
+    TileType: 0
+  - Id: 79
+    Coordinate: {x: 7, y: 8}
+    TileType: 0
+  - Id: 80
+    Coordinate: {x: 8, y: 8}
+    TileType: 0
+  - Id: 81
+    Coordinate: {x: 0, y: 9}
+    TileType: 0
+  - Id: 82
+    Coordinate: {x: 1, y: 9}
+    TileType: 0
+  - Id: 83
+    Coordinate: {x: 2, y: 9}
+    TileType: 0
+  - Id: 84
+    Coordinate: {x: 3, y: 9}
+    TileType: 0
+  - Id: 85
+    Coordinate: {x: 4, y: 9}
+    TileType: 0
+  - Id: 86
+    Coordinate: {x: 5, y: 9}
+    TileType: 0
+  - Id: 87
+    Coordinate: {x: 6, y: 9}
+    TileType: 0
+  - Id: 88
+    Coordinate: {x: 7, y: 9}
+    TileType: 0
+  - Id: 89
+    Coordinate: {x: 8, y: 9}
+    TileType: 0
+  - Id: 90
+    Coordinate: {x: 0, y: 10}
+    TileType: 0
+  - Id: 91
+    Coordinate: {x: 1, y: 10}
+    TileType: 0
+  - Id: 92
+    Coordinate: {x: 2, y: 10}
+    TileType: 0
+  - Id: 93
+    Coordinate: {x: 3, y: 10}
+    TileType: 0
+  - Id: 94
+    Coordinate: {x: 4, y: 10}
+    TileType: 0
+  - Id: 95
+    Coordinate: {x: 5, y: 10}
+    TileType: 0
+  - Id: 96
+    Coordinate: {x: 6, y: 10}
+    TileType: 0
+  - Id: 97
+    Coordinate: {x: 7, y: 10}
+    TileType: 0
+  - Id: 98
+    Coordinate: {x: 8, y: 10}
+    TileType: 0
+  tileSpawnerData:
+  - name: 0
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0
+  - name: 1
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0
+  - name: 2
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0
+  - name: 3
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0
+  - name: 4
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0
+  - name: 5
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0
+  - name: 6
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0
+  - name: 7
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0
+  - name: 8
+    spawnTileDatas:
+    - name: Red Probability
+      type: 0
+      spawnProbability: 0
+    - name: Green Probability
+      type: 1
+      spawnProbability: 0
+    - name: Blue Probability
+      type: 2
+      spawnProbability: 0

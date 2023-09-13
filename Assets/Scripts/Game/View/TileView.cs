@@ -3,28 +3,39 @@ using UnityEngine;
 
 namespace Game.View
 {
-    public class Tile : MonoBehaviour
+    public enum TileType
     {
-        public TileType TileType
-        {
-            get => _tileType;
-            set
-            {
-                spriteRenderer.color = value switch
-                {
-                    TileType.Red => Color.red,
-                    TileType.Green => Color.green,
-                    TileType.Blue => Color.blue,
-                    TileType.Empty => Color.black,
-                    _ => throw new ArgumentOutOfRangeException(nameof(value), value, null)
-                };
-                _tileType = value;
-            }
-        }
-        private TileType _tileType;
+        Empty,
+        Red,
+        Green,
+        Blue
+    }
+    
+    public class TileView : MonoBehaviour
+    {
         public SpriteRenderer spriteRenderer;
         private Transform _destinationTransform;
         private float speed;
+        
+        public void InitTile(int width,int height,TileType tileType)
+        {
+            var tilePosition = new Vector3(width, height, 0);
+            transform.position = tilePosition;
+            name = "Tile " + "(" +tileType+ ")";
+            SetTile(tileType);
+        }
+
+        private void SetTile(TileType tileType)
+        {
+            spriteRenderer.color = tileType switch
+            {
+                TileType.Empty => Color.black,
+                TileType.Red => Color.red,
+                TileType.Green => Color.green,
+                TileType.Blue => Color.blue,
+                _ => Color.grey,
+            };
+        }
         private void Update()
         {
             if (_destinationTransform == null) return;
