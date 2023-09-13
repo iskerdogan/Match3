@@ -63,15 +63,22 @@ namespace Game.Controller
              CheckTileTypesRecursive(id);
              if (_cellMatch.Count < 3)
              {
-                 _gridView.CellMatchCountTest(_cellMatch.Count);
                  //TODO
+                 PlayMismatchAnimations();
                  return;
              }
              DestroyEqualsTile();
-             _gridView.CellMatchCountTest(_cellMatch.Count);
          }
 
-        private async void DestroyEqualsTile()
+         private void PlayMismatchAnimations()
+         {
+             for (int i = 0; i < _cellMatch.Count; i++)
+             {
+                 _gridView.PlayMismatchAnimation(_cellMatch[i].Id);
+             }
+         }
+
+         private async void DestroyEqualsTile()
         {
             for (int i = 0; i < _cellMatch.Count; i++)
             {

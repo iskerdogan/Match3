@@ -14,11 +14,9 @@ namespace Game.View
         void CreateCell(int id,int width,int height);
         void CreateTile(int cellId, int width, int height, TileType tileType);
         void MoveTile(int neighbourUpCellId,int destinationCellId);
-        // void SetNeighbour(int gridWidth,int gridHeight);
         void SetDelegate(IGridViewDelegate gridViewDelegate);
-        // void TestLog(int count);
         void PlayMatchAnimation(int id);
-        void CellMatchCountTest(int count);
+        void PlayMismatchAnimation(int id);
     }   
     
     //Controllera ulaşmak için
@@ -35,6 +33,7 @@ namespace Game.View
         
         [Inject] private InputManager _inputManager;
         [Inject] private TileMatchAnimation _tileMatchAnimation;
+        [Inject] private TileMismatchAnimation _tileMismatchAnimation;
 
         private IGridViewDelegate _gridViewDelegate; //Controllera ulaşmak için
 
@@ -104,10 +103,12 @@ namespace Game.View
             if (!tileView) return;
             _tileMatchAnimation.Execute(tileView.transform,()=> Destroy(tileView));
         }
-
-        public void CellMatchCountTest(int count)
+        
+        public void PlayMismatchAnimation(int id)
         {
-            Debug.Log(count);
+            var tileView = _cellViews[id].TileView;
+            if (!tileView) return;
+            _tileMismatchAnimation.Execute(tileView.transform);
         }
 
         private void Clicked()
