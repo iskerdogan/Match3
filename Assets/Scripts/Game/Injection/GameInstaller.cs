@@ -14,6 +14,7 @@ namespace Game.Injection
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private TileMatchAnimation _tileMatchAnimation;
         [SerializeField] private TileMismatchAnimation _tileMismatchAnimation;
+        [SerializeField] private TileSpawnerView _tileSpawnerView;
 
         public override void InstallBindings()
         {
@@ -26,8 +27,10 @@ namespace Game.Injection
             Container.BindInterfacesAndSelfTo<GridView>().FromInstance(_gridView).AsSingle();
             Container.BindInterfacesAndSelfTo<TileMatchAnimation>().FromInstance(_tileMatchAnimation).AsSingle();
             Container.BindInterfacesAndSelfTo<TileMismatchAnimation>().FromInstance(_tileMismatchAnimation).AsSingle();
+            Container.BindInterfacesAndSelfTo<TileSpawnerView>().FromInstance(_tileSpawnerView).AsSingle();
             Container.BindInterfacesAndSelfTo<CellController>().AsSingle();
             Container.BindInterfacesAndSelfTo<TileController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TileSpawnerController>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputManager>().FromInstance(_inputManager).AsSingle();
             Container.BindInterfacesAndSelfTo<LevelView>().AsSingle();
         }

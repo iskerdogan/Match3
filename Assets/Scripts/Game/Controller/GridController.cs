@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Game.Model;
@@ -14,12 +15,14 @@ namespace Game.Controller
         [Inject] private ITileMatchAnimation _tileMatchAnimation;
         [Inject] private CellController _cellController;
         [Inject] private TileController _tileController;
+        [Inject] private TileSpawnerController _tileSpawnerController;
         
         //Controllera ulaşmak için
         public int Test { get; set; }
         
         private List<CellModel> _cellMatch = new List<CellModel>();
         private bool[] _cellMatchBool;
+        private bool[] _cellCheckBool;
 
         public void Initialize()
         {
@@ -31,8 +34,10 @@ namespace Game.Controller
         {
             _gridView.InitGrid(_gridModel.Width , _gridModel.Height);
             _cellMatchBool = new bool[_gridModel.Width * _gridModel.Height];
+            _cellCheckBool = new bool[_gridModel.Width * _gridModel.Height];
             _cellController.InitCells();
             _tileController.InitTiles();
+            _tileSpawnerController.InitSpawner();
         }
         
          private void CheckTileTypesRecursive(int id)
@@ -64,18 +69,15 @@ namespace Game.Controller
              if (_cellMatch.Count < 3)
              {
                  //TODO
-                 PlayMismatchAnimations();
+                 PlayMismatchAnimations(cellModel);
                  return;
              }
              DestroyEqualsTile();
          }
 
-         private void PlayMismatchAnimations()
+         private void PlayMismatchAnimations(CellModel clickedCellModel)
          {
-             for (int i = 0; i < _cellMatch.Count; i++)
-             {
-                 _gridView.PlayMismatchAnimation(_cellMatch[i].Id);
-             }
+             _gridView.PlayMismatchAnimation(clickedCellModel.Id);
          }
 
          private async void DestroyEqualsTile()
@@ -87,10 +89,16 @@ namespace Game.Controller
             }
 
             await UniTask.WaitForSeconds(_tileMatchAnimation.Duration);
-            
-            for (int i = 0; i < _cellMatch.Count; i++)
+            _cellMatch.Sort((x, y) => x.Id.CompareTo(y.Id));
+            for (var i = 0; i < _cellMatch.Count; i++)
             {
                 CheckNeighbourUp(_cellMatch[i]);
+            }
+
+            // await UniTask.WaitForSeconds(.1f);
+            for (int i = 0; i < _cellMatch.Count; i++) 
+            {
+                _tileController.SpawnTile(_cellMatch[i]);
             }
         }
 
@@ -99,13 +107,16 @@ namespace Game.Controller
             var neighbourUp = cellModel.GetNeighbour(Direction.Up);
             if (neighbourUp == null)
             {
-                cellModel.SetTileModel(null);
                 return;
             }
-            if (neighbourUp.TileModel == null) return; //TODO şu an yeni tile generate etmediği için hata fırlatmasını önlüyor
-            // if (_cellMatch.Contains(neighbourUp)) return;
+            if (neighbourUp.TileModel == null) 
+            {
+                return; //TODO şu an yeni tile generate etmediği için hata fırlatmasını önlüyor
+            }
             if (_cellMatchBool[neighbourUp.Id]) return; 
+            // if (_cellCheckBool[neighbourUp.Id]) return; 
             _tileController.MoveTile(neighbourUp,cellModel);
+            _cellCheckBool[neighbourUp.Id] = true;
             CheckNeighbourUp(neighbourUp);
         }
         
@@ -114,6 +125,7 @@ namespace Game.Controller
             for (int i = 0; i < _cellMatchBool.Length; i++)
             {
                 _cellMatchBool[i] = false;
+                _cellCheckBool[i] = false;
             }
         }
 

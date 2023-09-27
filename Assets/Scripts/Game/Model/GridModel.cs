@@ -61,7 +61,6 @@ namespace Game.Model
             var cellCount = Width * Height;
             _cellModels = new CellModel[cellCount];
             SetCell();
-            // SetCellNeighbour();
             SetTile(data);
         }
 
@@ -94,45 +93,6 @@ namespace Game.Model
                 }
             }
         }
-
-        // private void SetCellNeighbour()
-        // {
-        //     for (int i = 0; i < _cellModels.Length; i++)
-        //     {
-        //         for (int j = 0; j < Enum.GetNames(typeof(Direction)).Length; j++)
-        //         {
-        //             _cellModels[i].SetNeighbours((Direction)j,GetCellNeighbourId((Direction)j, _cellModels[i].Id,_cellModels[i].X,_cellModels[i].Y,Width,Height));
-        //         }
-        //     }
-        // }
-        //
-        // private CellModel GetCellNeighbourId(Direction neighbour,int cellId,int cellX,int cellY,int gridWidth,int gridHeight)
-        // {
-        //     CellModel result;
-        //     switch (neighbour)
-        //     {
-        //         case Direction.Up:
-        //             if (cellY == gridHeight - 1) return null;
-        //             result = _cellModels[cellId + gridWidth];
-        //             break;
-        //         case Direction.Down:
-        //             if (cellY == 0) return null;
-        //             result =  _cellModels[cellId - gridWidth];
-        //             break;
-        //         case Direction.Left:
-        //             if (cellX == 0) return null;
-        //             result =  _cellModels[cellId - 1];
-        //             break;
-        //         case Direction.Right:
-        //             if (cellX == gridWidth - 1) return null;
-        //             result =  _cellModels[cellId + 1];
-        //             break;
-        //         default:
-        //             result = null;
-        //             break;
-        //     }
-        //     return result;
-        // }
         
         public CellModel GetCellModel(int x, int y)
         {

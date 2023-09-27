@@ -1,4 +1,7 @@
-﻿using Game.Model;
+﻿using System;
+using System.Security.Cryptography;
+using Cysharp.Threading.Tasks;
+using Game.Model;
 using Game.View;
 using Zenject;
 
@@ -16,6 +19,36 @@ namespace Game.Controller
                 var cell = _gridModel.GetCellModel(i);
                 _gridView.CreateTile(cell.Id, cell.X, cell.Y,GetModelType(cell.TileModel.TileType));
             }
+        }
+        
+        public void SpawnTile(CellModel matchCell)
+        {
+            var startCell = _gridModel.GetCellModel(matchCell.X, _gridModel.Height - 1);
+            if (startCell.TileModel != null) return;
+            // if (startCell.TileModel is {TileType: 0}) return;
+            CheckNeighbourDown(startCell);
+            
+            // var destinationCellViewNeighbourDown = destinationCell.GetNeighbour(Direction.Down);
+            // if (destinationCellViewNeighbourDown == null) return;
+            // if (destinationCellViewNeighbourDown.TileModel != null) return;
+
+            // MoveTile(destinationCell,destinationCellViewNeighbourDown);
+        }
+        
+        private void CheckNeighbourDown(CellModel cellModel)
+        {
+            var neighbourDown = cellModel.GetNeighbour(Direction.Down);
+            if (neighbourDown == null)
+            {
+                MoveTile(cellModel);
+                return;
+            }
+            if (neighbourDown.TileModel != null)
+            {
+                MoveTile(cellModel);
+                return;
+            }
+            CheckNeighbourDown(neighbourDown);
         }
         
         private TileType GetModelType(int tileType)
@@ -39,18 +72,27 @@ namespace Game.Controller
             return result;
         }
 
-        public void MoveTile(CellModel neighbourUpCellView,CellModel destinationCellView)
+        public void MoveTile(CellModel neighbourUpCell,CellModel destinationCell)
         {
-            var tile = neighbourUpCellView.TileModel;
-            if (tile.TileType == 0) return;
-            _gridView.MoveTile(neighbourUpCellView.Id,destinationCellView.Id);
+            var tile = neighbourUpCell.TileModel;
+            if (tile?.TileType == 0) return;
+            neighbourUpCell.SetTileModel(null);
+            destinationCell.SetTileModel(tile);
+            _gridView.MoveTile(neighbourUpCell.Id,destinationCell.Id);
             // tile.MoveTile(destinationCellView.transform);
-            destinationCellView.SetTileModel(tile);
-            neighbourUpCellView.SetTileModel(null);
-            var destinationCellViewNeighbourDown = destinationCellView.GetNeighbour(Direction.Down);
+            // destinationCell.SetTileModel(new TileModel());
+            // destinationCell.TileModel.SetData(tile.TileType);
+            var destinationCellViewNeighbourDown = destinationCell.GetNeighbour(Direction.Down);
             if (destinationCellViewNeighbourDown == null) return;
             if (destinationCellViewNeighbourDown.TileModel != null) return;
-            MoveTile(destinationCellView,destinationCellViewNeighbourDown);
+            MoveTile(destinationCell,destinationCellViewNeighbourDown);
+        }
+        private void MoveTile(CellModel cellModel)
+        {
+            var type = RandomNumberGenerator.GetInt32(1, 4);
+            _gridView.SpawnTile(cellModel.X,GetModelType(type),cellModel.Id);
+            cellModel.SetTileModel(new TileModel());
+            cellModel.TileModel.SetData(type);
         }
     }
 }

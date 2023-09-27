@@ -13,10 +13,12 @@ namespace Game.View
         void InitGrid(int width, int height);
         void CreateCell(int id,int width,int height);
         void CreateTile(int cellId, int width, int height, TileType tileType);
+        void SpawnTile(int width, TileType tileType,int destinationCellId);
         void MoveTile(int neighbourUpCellId,int destinationCellId);
         void SetDelegate(IGridViewDelegate gridViewDelegate);
         void PlayMatchAnimation(int id);
         void PlayMismatchAnimation(int id);
+        void Test(int id);
     }   
     
     //Controllera ulaşmak için
@@ -34,6 +36,7 @@ namespace Game.View
         [Inject] private InputManager _inputManager;
         [Inject] private TileMatchAnimation _tileMatchAnimation;
         [Inject] private TileMismatchAnimation _tileMismatchAnimation;
+        [Inject] private TileSpawnerView _tileSpawnerView;
 
         private IGridViewDelegate _gridViewDelegate; //Controllera ulaşmak için
 
@@ -78,6 +81,20 @@ namespace Game.View
             _cellViews[cellId].SetTileView(tileView);
         }
 
+        public void SpawnTile(int width,TileType tileType,int destinationCellId)
+        {
+            TileView tileView = Instantiate(_tileViewPrefab, Vector3.zero,Quaternion.identity);
+            tileView.InitTile((int)_tileSpawnerView.GetSpawnTilePosition(width).x, (int)_tileSpawnerView.GetSpawnTilePosition(width).y,tileType);
+            var destinationCell = _cellViews[destinationCellId];
+            destinationCell.SetTileView(tileView);
+            MoveTile(tileView, destinationCell);
+        }
+        
+        public Vector3 GetTileSpawnerPosition(int id)
+        {
+            return _cellViews[id].transform.position + Vector3.up;
+        }
+
         public void MoveTile(int neighbourUpCellId, int destinationCellId)
         {
             var neighbourUpCell = _cellViews[neighbourUpCellId];
@@ -85,6 +102,13 @@ namespace Game.View
             neighbourUpCell.TileView.MoveTile(destinationCell.transform);
             destinationCell.SetTileView(neighbourUpCell.TileView);
             neighbourUpCell.SetTileView(null);
+        }
+        
+        public void MoveTile(TileView tileView, CellView destinationCell)
+        {
+            tileView.MoveTile(destinationCell.transform);
+            destinationCell.SetTileView(tileView);
+            // destinationCell.SetTileView(tileView);
         }
 
         private void Subscribe()
@@ -101,7 +125,7 @@ namespace Game.View
         {
             var tileView = _cellViews[id].TileView;
             if (!tileView) return;
-            _tileMatchAnimation.Execute(tileView.transform,()=> Destroy(tileView));
+            _tileMatchAnimation.Execute(tileView.transform,()=> Destroy(tileView.gameObject));
         }
         
         public void PlayMismatchAnimation(int id)
@@ -109,6 +133,11 @@ namespace Game.View
             var tileView = _cellViews[id].TileView;
             if (!tileView) return;
             _tileMismatchAnimation.Execute(tileView.transform);
+        }
+
+        public void Test(int id)
+        {
+            Debug.Log(id);
         }
 
         private void Clicked()

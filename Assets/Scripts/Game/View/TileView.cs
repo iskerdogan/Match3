@@ -50,7 +50,7 @@ namespace Game.View
 
         private void Move()
         {
-            speed = Time.deltaTime * 5;
+            speed = Time.deltaTime * 20;
             var distance = Vector3.Distance(transform.position, _destinationTransform.position);
             speed *= 1 / distance;
             transform.position = Vector3.Lerp(transform.position, _destinationTransform.position, speed);
