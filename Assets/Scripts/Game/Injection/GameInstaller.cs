@@ -22,6 +22,7 @@ namespace Game.Injection
             // var gridData = GetGirdData();
             Container.BindInterfacesAndSelfTo<GridModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TileSpawnerModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelController>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridController>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridView>().FromInstance(_gridView).AsSingle();

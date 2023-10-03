@@ -1,4 +1,3 @@
-using MyBox.EditorTools;
 using UnityEditor;
 using UnityEngine;
 using Zenject;
@@ -10,12 +9,14 @@ namespace Game.View
         void InitSpawnerArray(int width);
         void CreateSpawner(int width,int id);
         Vector3 GetSpawnTilePosition(int width);
+        void Log(int[] array);
     }
     public class TileSpawnerView : MonoBehaviour,ITileSpawnerView
     {
         [Inject] private GridView _gridView;
+        
         private Transform[] _spawners;
-
+        
         public void InitSpawnerArray(int width)
         {
             _spawners = new Transform[width];
@@ -36,6 +37,14 @@ namespace Game.View
         public Vector3 GetSpawnTilePosition(int width)
         {
             return _spawners[width].position;
+        }
+
+        public void Log(int[] array)
+        {
+            for (int i = 70; i < 100; i++)
+            {
+                Debug.Log(array[i]);
+            }
         }
     }
 }

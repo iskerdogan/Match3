@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
-using Cysharp.Threading.Tasks;
+﻿using System.Security.Cryptography;
 using Game.Model;
 using Game.View;
 using Zenject;
@@ -11,6 +9,7 @@ namespace Game.Controller
     {
         [Inject] private IGridModel _gridModel;
         [Inject] private IGridView _gridView;
+        [Inject] private TileSpawnerController _tileSpawnerController;
         
         public void InitTiles()
         {
@@ -25,14 +24,7 @@ namespace Game.Controller
         {
             var startCell = _gridModel.GetCellModel(matchCell.X, _gridModel.Height - 1);
             if (startCell.TileModel != null) return;
-            // if (startCell.TileModel is {TileType: 0}) return;
             CheckNeighbourDown(startCell);
-            
-            // var destinationCellViewNeighbourDown = destinationCell.GetNeighbour(Direction.Down);
-            // if (destinationCellViewNeighbourDown == null) return;
-            // if (destinationCellViewNeighbourDown.TileModel != null) return;
-
-            // MoveTile(destinationCell,destinationCellViewNeighbourDown);
         }
         
         private void CheckNeighbourDown(CellModel cellModel)
@@ -79,9 +71,6 @@ namespace Game.Controller
             neighbourUpCell.SetTileModel(null);
             destinationCell.SetTileModel(tile);
             _gridView.MoveTile(neighbourUpCell.Id,destinationCell.Id);
-            // tile.MoveTile(destinationCellView.transform);
-            // destinationCell.SetTileModel(new TileModel());
-            // destinationCell.TileModel.SetData(tile.TileType);
             var destinationCellViewNeighbourDown = destinationCell.GetNeighbour(Direction.Down);
             if (destinationCellViewNeighbourDown == null) return;
             if (destinationCellViewNeighbourDown.TileModel != null) return;
@@ -89,7 +78,8 @@ namespace Game.Controller
         }
         private void MoveTile(CellModel cellModel)
         {
-            var type = RandomNumberGenerator.GetInt32(1, 4);
+            // var type = RandomNumberGenerator.GetInt32(1, 4);
+            var type = _tileSpawnerController.GetSpawnTileType();
             _gridView.SpawnTile(cellModel.X,GetModelType(type),cellModel.Id);
             cellModel.SetTileModel(new TileModel());
             cellModel.TileModel.SetData(type);

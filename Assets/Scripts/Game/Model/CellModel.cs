@@ -1,7 +1,4 @@
-﻿using System;
-using Zenject;
-
-namespace Game.Model
+﻿namespace Game.Model
 {
     public enum Direction
     {

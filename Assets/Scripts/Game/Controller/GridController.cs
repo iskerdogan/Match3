@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Game.Model;
 using Game.View;
@@ -22,7 +20,6 @@ namespace Game.Controller
         
         private List<CellModel> _cellMatch = new List<CellModel>();
         private bool[] _cellMatchBool;
-        private bool[] _cellCheckBool;
 
         public void Initialize()
         {
@@ -34,7 +31,6 @@ namespace Game.Controller
         {
             _gridView.InitGrid(_gridModel.Width , _gridModel.Height);
             _cellMatchBool = new bool[_gridModel.Width * _gridModel.Height];
-            _cellCheckBool = new bool[_gridModel.Width * _gridModel.Height];
             _cellController.InitCells();
             _tileController.InitTiles();
             _tileSpawnerController.InitSpawner();
@@ -95,7 +91,6 @@ namespace Game.Controller
                 CheckNeighbourUp(_cellMatch[i]);
             }
 
-            // await UniTask.WaitForSeconds(.1f);
             for (int i = 0; i < _cellMatch.Count; i++) 
             {
                 _tileController.SpawnTile(_cellMatch[i]);
@@ -114,9 +109,7 @@ namespace Game.Controller
                 return; //TODO şu an yeni tile generate etmediği için hata fırlatmasını önlüyor
             }
             if (_cellMatchBool[neighbourUp.Id]) return; 
-            // if (_cellCheckBool[neighbourUp.Id]) return; 
             _tileController.MoveTile(neighbourUp,cellModel);
-            _cellCheckBool[neighbourUp.Id] = true;
             CheckNeighbourUp(neighbourUp);
         }
         
@@ -125,7 +118,6 @@ namespace Game.Controller
             for (int i = 0; i < _cellMatchBool.Length; i++)
             {
                 _cellMatchBool[i] = false;
-                _cellCheckBool[i] = false;
             }
         }
 

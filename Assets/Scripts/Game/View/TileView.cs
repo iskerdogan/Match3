@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Game.View
@@ -15,7 +14,7 @@ namespace Game.View
     {
         public SpriteRenderer spriteRenderer;
         private Transform _destinationTransform;
-        private float speed;
+        private float _speed;
         
         public void InitTile(int width,int height,TileType tileType)
         {
@@ -50,10 +49,13 @@ namespace Game.View
 
         private void Move()
         {
-            speed = Time.deltaTime * 20;
-            var distance = Vector3.Distance(transform.position, _destinationTransform.position);
-            speed *= 1 / distance;
-            transform.position = Vector3.Lerp(transform.position, _destinationTransform.position, speed);
+            _speed = Time.deltaTime * 20;
+            var position = transform.position;
+            var destinationPosition = _destinationTransform.position;
+            var distance = Vector3.Distance(position, destinationPosition);
+            _speed *= 1 / distance;
+            position = Vector3.Lerp(position, destinationPosition, _speed);
+            transform.position = position;
             if (distance < 0.1f)
             {
                 transform.SetParent(_destinationTransform);
